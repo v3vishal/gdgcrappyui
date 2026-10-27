@@ -345,9 +345,11 @@
       background: var(--surface-base);
       border: 1px solid var(--gold-primary);
       border-radius: 24px;
-      width: 720px;
+      width: 740px;
       max-width: 100%;
-      padding: 32px 38px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 28px 34px;
       box-shadow: 
         0 40px 140px rgba(0, 0, 0, 0.95),
         0 0 80px rgba(197, 160, 89, 0.15);
@@ -396,11 +398,11 @@
       background: rgba(255, 255, 255, 0.02);
       border-left: 3px solid var(--gold-primary);
       border-radius: 0 8px 8px 0;
-      padding: 10px 14px;
-      font-size: 12px;
+      padding: 8px 12px;
+      font-size: 11.5px;
       line-height: 1.5;
       color: #ccd1e2;
-      margin: 14px 0 18px;
+      margin: 10px 0 14px;
     }
 
     /* ── SCRAMBLED SLICES CONTAINER (PUZZLE) ── */
@@ -410,7 +412,7 @@
       align-items: center;
       font-size: 11px;
       font-family: var(--font-mono);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     #slice-status-badge {
       color: var(--gold-light);
@@ -431,15 +433,15 @@
       gap: 8px;
       background: #090a10;
       border: 1.5px dashed var(--surface-border);
-      border-radius: 16px;
-      padding: 12px;
-      margin-bottom: 10px;
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 8px;
       position: relative;
       transition: all 0.3s;
     }
     .slice-puzzle-board.solved {
       border: 1.5px solid var(--success);
-      box-shadow: 0 0 35px var(--success-glow);
+      box-shadow: 0 0 30px var(--success-glow);
     }
 
     /* Laser Scanner Beam (Active when solved) */
@@ -497,7 +499,7 @@
     }
     .puzzle-tile canvas {
       width: 100%;
-      height: 80px;
+      height: 74px;
       display: block;
       transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -507,7 +509,7 @@
       justify-content: space-between;
       align-items: center;
       background: #151824;
-      padding: 4px 6px;
+      padding: 3px 6px;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
     .tile-label {
@@ -524,7 +526,7 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: var(--text-muted);
       border-radius: 4px;
-      font-size: 10px;
+      font-size: 9.5px;
       padding: 1px 5px;
       cursor: pointer;
       transition: all 0.15s;
@@ -540,7 +542,7 @@
       height: 4px;
       border-radius: 99px;
       overflow: hidden;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     #puzzle-timer-fill {
       height: 100%;
@@ -554,7 +556,7 @@
       justify-content: space-between;
       align-items: center;
       font-size: 11.5px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
     .input-section-header label { font-weight: 600; }
     .audio-captcha-btn {
@@ -584,12 +586,12 @@
       background: #090a10;
       border: 1.5px solid var(--surface-border);
       border-radius: 12px;
-      padding: 12px 18px;
+      padding: 10px 18px;
       color: #fff;
       font-family: var(--font-mono);
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
-      letter-spacing: 14px;
+      letter-spacing: 12px;
       text-align: center;
       outline: none;
       transition: all 0.2s;
@@ -626,10 +628,10 @@
       background: rgba(197, 160, 89, 0.08);
       border: 1px solid rgba(197, 160, 89, 0.25);
       border-radius: 8px;
-      padding: 6px 12px;
-      font-size: 11px;
+      padding: 5px 10px;
+      font-size: 10.5px;
       color: #dfba73;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       font-family: var(--font-mono);
     }
 
@@ -637,32 +639,32 @@
     .shuffling-keypad {
       background: #090a10;
       border: 1px solid var(--surface-border);
-      border-radius: 14px;
-      padding: 10px;
-      margin-bottom: 14px;
+      border-radius: 12px;
+      padding: 8px;
+      margin-bottom: 12px;
     }
     .keypad-header-row {
       display: flex;
       justify-content: space-between;
-      font-size: 10px;
+      font-size: 9.5px;
       color: var(--text-dim);
       font-family: var(--font-mono);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       text-transform: uppercase;
     }
     #virtual-keys-grid {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
-      gap: 6px;
+      gap: 5px;
     }
     .hw-key {
       background: #151824;
       border: 1px solid rgba(255, 255, 255, 0.07);
       color: #e2e6f2;
-      border-radius: 8px;
-      padding: 8px 0;
+      border-radius: 6px;
+      padding: 7px 0;
       font-family: var(--font-mono);
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       transition: background 0.1s, transform 0.1s;
@@ -678,14 +680,14 @@
       background: #2a151b;
       border-color: rgba(255, 59, 48, 0.25);
       color: #ff8598;
-      font-size: 11.5px;
+      font-size: 11px;
     }
     .hw-key.key-clear {
       grid-column: span 2;
       background: #1f1d2b;
       border-color: rgba(197, 160, 89, 0.2);
       color: var(--gold-light);
-      font-size: 11.5px;
+      font-size: 11px;
     }
 
     /* ── CURSED CONFIDENCE LEVEL SLIDER ── */
@@ -693,30 +695,156 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--surface-border);
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 8px 12px;
       margin-bottom: 12px;
     }
     .slider-meta-row {
       display: flex;
       justify-content: space-between;
-      font-size: 11px;
+      font-size: 10.5px;
       font-family: var(--font-mono);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .slider-label { color: var(--text-muted); }
     .slider-val { font-weight: 800; color: var(--gold-light); }
     #confidence-slider {
       width: 100%;
-      height: 6px;
+      height: 5px;
       accent-color: var(--gold-primary);
       cursor: pointer;
     }
     .slider-hint {
-      font-size: 10px;
+      font-size: 9.5px;
       color: var(--text-dim);
-      margin-top: 4px;
+      margin-top: 3px;
       font-style: italic;
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       THE GAMBLING MECHANISM: CBUAE STATUTORY SLOT MACHINE
+       ═══════════════════════════════════════════════════════════ */
+    .slot-machine-chassis {
+      background: radial-gradient(circle at 50% 20%, #1e1b14 0%, #0d0e14 100%);
+      border: 2px solid var(--gold-primary);
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 25px rgba(197, 160, 89, 0.15), inset 0 0 20px rgba(0, 0, 0, 0.8);
+      position: relative;
+      transition: all 0.3s;
+    }
+    .slot-machine-chassis.jackpot-glow {
+      border-color: var(--success);
+      box-shadow: 0 0 35px var(--success-glow), inset 0 0 25px rgba(0, 208, 132, 0.2);
+    }
+    .slot-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .slot-brand {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .slot-directive {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .slot-reels-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      background: #06070a;
+      border: 1.5px solid rgba(197, 160, 89, 0.3);
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-shadow: inset 0 10px 20px rgba(0,0,0,0.9);
+    }
+    .slot-reel-window {
+      background: linear-gradient(180deg, #181922 0%, #0c0d13 50%, #181922 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.8);
+    }
+    .slot-reel-window.spinning {
+      filter: blur(1.5px);
+      animation: reel-shake 0.1s infinite alternate;
+    }
+    @keyframes reel-shake {
+      0% { transform: translateY(-2px); }
+      100% { transform: translateY(2px); }
+    }
+
+    .slot-controls-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-slot-lever {
+      flex: 1.2;
+      background: linear-gradient(135deg, #dfba73 0%, #c5a059 50%, #876223 100%);
+      color: #0c0d12;
+      border: none;
+      padding: 11px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 6px 20px rgba(197, 160, 89, 0.3);
+      transition: all 0.15s;
+    }
+    .btn-slot-lever:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(197, 160, 89, 0.45);
+    }
+    .btn-slot-lever:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+    .btn-slot-lever:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .slot-status-lcd {
+      flex: 1.8;
+      background: #07080c;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gold-light);
+      line-height: 1.4;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+    }
+    .slot-status-lcd.win { color: var(--success); }
+    .slot-status-lcd.loss { color: var(--danger); }
 
     #captcha-validation-msg {
       font-size: 12px;
@@ -1055,7 +1183,7 @@
         <br />
         1. <strong>Unscramble & Orient</strong> the 6 sliced cryptographic tiles into order <strong>[I → VI]</strong> (drag/drop or click two to swap; use <strong>⟳ Flip</strong> if inverted).
         <br />
-        2. Once assembled, type the revealed secret code below!
+        2. Once assembled, type the secret code below, calibrate your confidence to <strong>99%</strong>, and <strong>stake a 3-of-a-kind match</strong> on the regulatory slot machine!
       </div>
 
       <!-- Slices Header -->
@@ -1115,6 +1243,34 @@
         </div>
       </div>
 
+      <!-- ═══════════════════════════════════════════════════════════
+           GAMBLING MECHANISM: CBUAE STATUTORY RNG SLOT MACHINE
+           ═══════════════════════════════════════════════════════════ -->
+      <div class="slot-machine-chassis" id="slot-chassis">
+        <div class="slot-top-row">
+          <div class="slot-brand">
+            <span>🎰</span>
+            <span>CBUAE Entropy Stake Slot (Directive 77)</span>
+          </div>
+          <div class="slot-directive">Match 3-of-a-kind to Stake Token</div>
+        </div>
+
+        <div class="slot-reels-row">
+          <div class="slot-reel-window" id="reel-1">❓</div>
+          <div class="slot-reel-window" id="reel-2">❓</div>
+          <div class="slot-reel-window" id="reel-3">❓</div>
+        </div>
+
+        <div class="slot-controls-row">
+          <button class="btn-slot-lever" id="btn-pull-lever" onclick="pullSlotLever()">
+            <span>🎰</span> Pull Lever (Stake)
+          </button>
+          <div class="slot-status-lcd" id="slot-lcd-text">
+            AWAITING STAKE: Pull lever to generate institutional cryptographic proof...
+          </div>
+        </div>
+      </div>
+
       <div id="captcha-validation-msg"></div>
 
       <!-- Bottom Actions -->
@@ -1156,7 +1312,7 @@
     </div>
   </div>
 
-  <!-- ── OFFICIAL CENTRAL BANK REVERSAL RECEIPT ── -->
+  <!-- ── OFFICIAL REVERSAL RECEIPT ── -->
   <div id="receipt-overlay">
     <div class="certificate-sheet">
       <div class="cert-top">
@@ -1181,7 +1337,7 @@
         <span>-AED 4,999.00</span>
       </div>
       <div class="cert-row">
-        <span>De-scrambling Micro-Tariff:</span>
+        <span>Slot RNG Entropy Levy:</span>
         <span>-AED 3,500.00</span>
       </div>
       <div class="cert-row">
@@ -1302,6 +1458,48 @@ function playBuzzer() {
   } catch (e) {}
 }
 
+function playReelThud(freq = 150) {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.12);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.12);
+  } catch (e) {}
+}
+
+function playJackpotSound() {
+  if (!soundEnabled) return;
+  const notes = [587.33, 880, 1174.66, 1760];
+  notes.forEach((f, i) => {
+    setTimeout(() => {
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(f, ctx.currentTime);
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.35);
+      } catch (e) {}
+    }, i * 80);
+  });
+}
+
 function playExecutiveFanfare() {
   if (!soundEnabled) return;
   const chords = [
@@ -1381,7 +1579,6 @@ let masterCaptchaCanvas = document.createElement('canvas');
 masterCaptchaCanvas.width = 450;
 masterCaptchaCanvas.height = 80;
 
-// State of each slice: original index and whether it is upside-down (0 = upright, 1 = 180° flipped)
 let sliceState = [
   { origIdx: 0, flipped: false },
   { origIdx: 1, flipped: false },
@@ -1403,7 +1600,6 @@ function drawMasterCaptcha(code) {
   const W = masterCaptchaCanvas.width;
   const H = masterCaptchaCanvas.height;
 
-  // Ultra-crisp security background with fine gradient
   const grad = ctx.createLinearGradient(0, 0, W, H);
   grad.addColorStop(0, '#fbfcfe');
   grad.addColorStop(0.5, '#eef2f9');
@@ -1411,8 +1607,6 @@ function drawMasterCaptcha(code) {
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
 
-  // Guilloche Security Waves across the entire canvas
-  // (Notice: When tiles are scrambled, the waves break! When aligned, they connect smoothly!)
   const wavePalette = ['rgba(197, 160, 89, 0.55)', 'rgba(255, 59, 48, 0.45)', 'rgba(0, 208, 132, 0.55)', 'rgba(0, 210, 255, 0.45)'];
   wavePalette.forEach((col, idx) => {
     ctx.strokeStyle = col;
@@ -1425,7 +1619,6 @@ function drawMasterCaptcha(code) {
     ctx.stroke();
   });
 
-  // Central Bank Security Strip across the middle
   ctx.strokeStyle = 'rgba(197, 160, 89, 0.75)';
   ctx.lineWidth = 1.2;
   ctx.setLineDash([6, 3]);
@@ -1435,7 +1628,6 @@ function drawMasterCaptcha(code) {
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // Draw 6 characters deliberately spanning and overlapping slice boundaries!
   const sliceW = W / 6;
   const chars = code.split('');
   chars.forEach((ch, i) => {
@@ -1452,7 +1644,6 @@ function drawMasterCaptcha(code) {
     ctx.restore();
   });
 
-  // Micro-security speckling and noise lines
   for (let i = 0; i < 50; i++) {
     ctx.fillStyle = `rgba(0, 0, 0, ${0.06 + Math.random() * 0.15})`;
     ctx.beginPath();
@@ -1463,7 +1654,6 @@ function drawMasterCaptcha(code) {
 
 function scrambleSlices() {
   const arr = [0, 1, 2, 3, 4, 5];
-  // Guarantee scramble permutation
   do {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -1471,22 +1661,19 @@ function scrambleSlices() {
     }
   } while (arr.every((v, i) => v === i));
 
-  // Also randomly flip 1 or 2 tiles upside down for maximum r/badUIbattles fun!
   return arr.map(idx => ({
     origIdx: idx,
-    flipped: Math.random() < 0.35 // 35% chance to be upside-down initially!
+    flipped: Math.random() < 0.35
   }));
 }
 
 function renderPuzzleBoard() {
   const board = document.getElementById('puzzle-board');
-  // Preserve laser line element
   board.innerHTML = '<div class="laser-scan-line"></div>';
 
   const sliceW = masterCaptchaCanvas.width / 6;
   const H = masterCaptchaCanvas.height;
 
-  // Check if fully solved: correct order AND none are flipped upside down!
   isCaptchaUnscrambled = sliceState.every((item, pos) => item.origIdx === pos && !item.flipped);
 
   sliceState.forEach((item, pos) => {
@@ -1503,21 +1690,18 @@ function renderPuzzleBoard() {
     cvs.height = H;
     const ctx = cvs.getContext('2d');
 
-    // Draw the slice
     ctx.drawImage(
       masterCaptchaCanvas,
       item.origIdx * sliceW, 0, sliceW, H,
       0, 0, sliceW, H
     );
 
-    // If flipped, rotate via CSS transform on canvas
     if (item.flipped) {
       cvs.style.transform = 'rotate(180deg)';
     } else {
       cvs.style.transform = 'none';
     }
 
-    // Tile Toolbar with Roman Numeral + ⟳ Flip Button
     const toolbar = document.createElement('div');
     toolbar.className = 'tile-toolbar';
 
@@ -1545,10 +1729,8 @@ function renderPuzzleBoard() {
     tile.appendChild(cvs);
     tile.appendChild(toolbar);
 
-    // Click to swap
     tile.addEventListener('click', () => onTileClick(pos));
 
-    // Drag and drop handlers
     tile.addEventListener('dragstart', (e) => {
       draggedTilePos = pos;
       e.dataTransfer.setData('text/plain', pos);
@@ -1609,9 +1791,9 @@ function updateCaptchaTerminalState() {
   const board = document.getElementById('puzzle-board');
 
   if (isCaptchaUnscrambled) {
-    statusBadge.textContent = `✓ CAPTCHA UNSCRAMBLED! The code is: "${activeCaptchaCode}" — Type it below!`;
+    statusBadge.textContent = `✓ CAPTCHA UNSCRAMBLED! The code is: "${activeCaptchaCode}" — Type & Stake below!`;
     statusBadge.classList.add('solved');
-    stageBadge.textContent = 'PHASE 2: REVERSE INPUT CALIBRATION';
+    stageBadge.textContent = 'PHASE 2: INPUT & GAMBLING STAKE';
     board.classList.add('solved');
     inputField.disabled = false;
     inputField.placeholder = '______';
@@ -1678,7 +1860,6 @@ function renderKeypadButtons() {
     grid.appendChild(btn);
   });
 
-  // Delete key
   const delBtn = document.createElement('button');
   delBtn.className = 'hw-key key-back';
   delBtn.textContent = '⌫ Del Front';
@@ -1694,7 +1875,6 @@ function renderKeypadButtons() {
   });
   grid.appendChild(delBtn);
 
-  // Clear key
   const clrBtn = document.createElement('button');
   clrBtn.className = 'hw-key key-clear';
   clrBtn.textContent = '✕ Reset';
@@ -1710,7 +1890,6 @@ function renderKeypadButtons() {
   grid.appendChild(clrBtn);
 }
 
-// Physical keyboard: Prepends in reverse order!
 const captchaInputField = document.getElementById('captcha-input-field');
 captchaInputField.addEventListener('keydown', (e) => {
   if (!isCaptchaUnscrambled) {
@@ -1725,7 +1904,6 @@ captchaInputField.addEventListener('keydown', (e) => {
   if (e.key === 'Backspace') {
     e.preventDefault();
     playHapticTick();
-    // Deletes from front!
     captchaInputField.value = captchaInputField.value.slice(1);
     updateLiveBufferDisplay();
     evaluateSubmissionReadiness();
@@ -1735,7 +1913,6 @@ captchaInputField.addEventListener('keydown', (e) => {
     e.preventDefault();
     playHapticTick();
     if (captchaInputField.value.length < 6) {
-      // PREPEND to front!
       captchaInputField.value = e.key.toUpperCase() + captchaInputField.value;
       updateLiveBufferDisplay();
       evaluateSubmissionReadiness();
@@ -1774,14 +1951,6 @@ function onConfidenceChange(val) {
   evaluateSubmissionReadiness();
 }
 
-function evaluateSubmissionReadiness() {
-  const btn = document.getElementById('btn-submit-cancellation');
-  const isFilled = captchaInputField.value.length === 6;
-  const isExactly99 = confidenceValue === 99;
-  btn.disabled = !(isCaptchaUnscrambled && isFilled && isExactly99);
-}
-
-// Backwards audio clue synthesizer
 function playAudioCaptchaClue() {
   if (!activeCaptchaCode) return;
   getAudioContext();
@@ -1818,11 +1987,108 @@ function playAudioCaptchaClue() {
 
 
 /* ─────────────────────────────────────────────────────────────
-   5. TIMER & TERMINAL LIFECYCLE
+   5. GAMBLING MECHANISM: CBUAE STATUTORY SLOT MACHINE
+   ───────────────────────────────────────────────────────────── */
+const SLOT_SYMBOLS = ['🏛️', '💎', '🪙', '⚖️', '7️⃣', '🍋'];
+let isSlotSpinning = false;
+let slotSpinCount = 0;
+let isGamblingStakeWon = false;
+
+function pullSlotLever() {
+  if (isSlotSpinning) return;
+  getAudioContext();
+  isSlotSpinning = true;
+
+  const leverBtn = document.getElementById('btn-pull-lever');
+  const lcd = document.getElementById('slot-lcd-text');
+  const chassis = document.getElementById('slot-chassis');
+  const r1 = document.getElementById('reel-1');
+  const r2 = document.getElementById('reel-2');
+  const r3 = document.getElementById('reel-3');
+
+  leverBtn.disabled = true;
+  chassis.classList.remove('jackpot-glow');
+  lcd.className = 'slot-status-lcd';
+  lcd.textContent = 'SPINNING: Staking cryptographic proof on CBUAE Quantum Reels...';
+
+  r1.classList.add('spinning');
+  r2.classList.add('spinning');
+  r3.classList.add('spinning');
+
+  // Spinning audio ticks
+  const spinInterval = setInterval(() => {
+    playHapticTick();
+    r1.textContent = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+    r2.textContent = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+    r3.textContent = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+  }, 70);
+
+  // Stop Reel 1 (650ms)
+  setTimeout(() => {
+    r1.classList.remove('spinning');
+    playReelThud(140);
+    r1.textContent = '7️⃣';
+  }, 650);
+
+  // Stop Reel 2 (1150ms)
+  setTimeout(() => {
+    r2.classList.remove('spinning');
+    playReelThud(180);
+    r2.textContent = '7️⃣';
+  }, 1150);
+
+  // Stop Reel 3 (1700ms) — Result depends on spin count!
+  setTimeout(() => {
+    clearInterval(spinInterval);
+    r3.classList.remove('spinning');
+    isSlotSpinning = false;
+    leverBtn.disabled = false;
+
+    if (slotSpinCount === 0) {
+      // Near miss comedy on first spin!
+      r3.textContent = '🍋';
+      playReelThud(90);
+      playBuzzer();
+      slotSpinCount++;
+      // Dock 3s from the captcha timer for extra bad UI stress!
+      secondsRemaining = Math.max(8, secondsRemaining - 3);
+
+      lcd.className = 'slot-status-lcd loss';
+      lcd.textContent = '❌ NEAR MISS [7️⃣-7️⃣-🍋]! House edge: 99.4%. Penalty: -3s timer! Spin again!';
+      document.getElementById('captcha-validation-msg').textContent =
+        '🎰 Slot Stake Failed: Must match 3-of-a-kind. Free re-spin available!';
+    } else {
+      // Jackpot Match on second spin!
+      r3.textContent = '7️⃣';
+      playReelThud(260);
+      playJackpotSound();
+      isGamblingStakeWon = true;
+
+      chassis.classList.add('jackpot-glow');
+      lcd.className = 'slot-status-lcd win';
+      lcd.textContent = '🎉 777 JACKPOT MATCH! Central Bank Cryptographic Stake Certified!';
+      document.getElementById('captcha-validation-msg').textContent =
+        '✓ Cryptographic stake verified! You can now authorize cancellation.';
+    }
+
+    evaluateSubmissionReadiness();
+  }, 1750);
+}
+
+function evaluateSubmissionReadiness() {
+  const btn = document.getElementById('btn-submit-cancellation');
+  const isFilled = captchaInputField.value.length === 6;
+  const isExactly99 = confidenceValue === 99;
+  btn.disabled = !(isCaptchaUnscrambled && isFilled && isExactly99 && isGamblingStakeWon);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   6. TIMER & TERMINAL LIFECYCLE
    ───────────────────────────────────────────────────────────── */
 function startCaptchaTimer() {
   clearInterval(captchaTimer);
-  secondsRemaining = 35;
+  secondsRemaining = 45;
   document.getElementById('slice-timer-counter').textContent = `${secondsRemaining}s left`;
 
   const bar = document.getElementById('puzzle-timer-fill');
@@ -1848,6 +2114,17 @@ function startCaptchaTimer() {
 function initiateCaptchaChallenge(keepError = false) {
   selectedTilePos = null;
   draggedTilePos = null;
+  isGamblingStakeWon = false;
+  slotSpinCount = 0;
+
+  document.getElementById('reel-1').textContent = '❓';
+  document.getElementById('reel-2').textContent = '❓';
+  document.getElementById('reel-3').textContent = '❓';
+  document.getElementById('slot-lcd-text').className = 'slot-status-lcd';
+  document.getElementById('slot-lcd-text').textContent =
+    'AWAITING STAKE: Pull lever to generate institutional cryptographic proof...';
+  document.getElementById('slot-chassis').classList.remove('jackpot-glow');
+
   if (!keepError) {
     document.getElementById('captcha-validation-msg').textContent = '';
   }
@@ -1886,9 +2163,14 @@ function verifyAndSubmitCaptcha() {
     errMsg.textContent = '⚠️ Confidence calibration must be set to exactly 99%.';
     return;
   }
+  if (!isGamblingStakeWon) {
+    playBuzzer();
+    errMsg.textContent = '⚠️ You must spin and match 3-of-a-kind on the Regulatory Slot Reel.';
+    return;
+  }
 
   if (entered === activeCaptchaCode) {
-    // Puzzle completely conquered! Advance to the Regulatory Affidavit Trap!
+    // Mastered all hurdles! Proceed to the Statutory Double-Negative Affidavit!
     clearInterval(captchaTimer);
     document.getElementById('captcha-overlay').classList.remove('show');
     openAffidavitModal();
@@ -1901,7 +2183,7 @@ function verifyAndSubmitCaptcha() {
 
 
 /* ─────────────────────────────────────────────────────────────
-   6. REGULATORY STATUTORY AFFIDAVIT (DOUBLE-NEGATIVE TRAP)
+   7. REGULATORY STATUTORY AFFIDAVIT (DOUBLE-NEGATIVE TRAP)
    ───────────────────────────────────────────────────────────── */
 function openAffidavitModal() {
   playHapticTick();
@@ -1909,20 +2191,18 @@ function openAffidavitModal() {
 }
 
 function handleAffidavitTrap() {
-  // Tricked by the double negative!
   document.getElementById('affidavit-overlay').classList.remove('show');
   triggerImmediateExecution();
 }
 
 function handleAffidavitTrueCancel() {
-  // Conquered everything!
   document.getElementById('affidavit-overlay').classList.remove('show');
   presentOfficialReceipt();
 }
 
 
 /* ─────────────────────────────────────────────────────────────
-   7. OFFICIAL REVERSAL ATTESTATION RECEIPT & CONFETTI
+   8. OFFICIAL REVERSAL ATTESTATION RECEIPT & CONFETTI
    ───────────────────────────────────────────────────────────── */
 function presentOfficialReceipt() {
   playExecutiveFanfare();
