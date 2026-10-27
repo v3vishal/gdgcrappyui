@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AL-HABIBI PRIVATE VAULT • Wire Revocation Security Terminal</title>
+  <style>
+    :root {
+      --bg-dark: #08090d;
+      --surface-base: #0f1118;
+      --surface-card: #151824;
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --gold-primary: #c5a059;
+      --gold-light: #dfba73;
+      --gold-glow: rgba(197, 160, 89, 0.25);
+      --danger: #ff3b30;
+      --danger-bg: rgba(255, 59, 48, 0.1);
+      --success: #00d084;
+      --success-glow: rgba(0, 208, 132, 0.35);
+      --accent: #00d2ff;
+      --text-main: #f5f6fa;
+      --text-muted: #8e95a7;
+      --text-dim: #545b70;
+      --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'SF Mono', 'Roboto Mono', Menlo, Monaco, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.08) 0%, transparent 60%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 36px 36px, 36px 36px;
+      min-height: 100vh;
+      color: var(--text-main);
+      overflow-x: hidden;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Top Executive Header ── */
+    .top-nav {
+      background: rgba(15, 17, 24, 0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 14px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .vault-crest {
+      width: 34px;
+      height: 34px;
+      border: 1.5px solid var(--gold-primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: var(--gold-light);
+      background: radial-gradient(circle, rgba(197, 160, 89, 0.15), transparent);
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+    .brand-text h1 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .brand-text p {
+      font-size: 10px;
+      color: var(--gold-primary);
+      letter-spacing: 1.2px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .regulatory-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--surface-border);
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--danger);
+      box-shadow: 0 0 8px var(--danger);
+      animation: pulse-ring 1.8s infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.9); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.5; }
+      100% { transform: scale(0.9); opacity: 1; }
+    }
+    .audio-toggle-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .audio-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    /* ── Main Wire Dispatch Card ── */
+    .portal-main {
+      max-width: 680px;
+      margin: 40px auto 60px;
+      padding: 0 20px;
+      position: relative;
+      z-index: 10;
+    }
+    .wire-card {
+      background: var(--surface-base);
+      border: 1px solid var(--surface-border);
+      border-radius: 24px;
+      padding: 36px 40px;
+      box-shadow: 
+        0 30px 90px rgba(0, 0, 0, 0.8),
+        0 0 60px rgba(197, 160, 89, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    .wire-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-primary), var(--danger), transparent);
+    }
+    .wire-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+    .wire-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--danger-bg);
+      border: 1px solid rgba(255, 59, 48, 0.3);
+      color: #ff6e67;
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+    .ref-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .amount-block {
+      text-align: center;
+      margin: 10px 0 24px;
+    }
+    .amount-header-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .amount-display {
+      font-size: 56px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      color: #fff;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 10px;
+    }
+    .amount-currency {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+    .fx-subtext {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-top: 4px;
+    }
+
+    .ledger-table {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+    .ledger-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      font-size: 12.5px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .ledger-row:last-child { border-bottom: none; }
+    .ledger-label { color: var(--text-muted); }
+    .ledger-val {
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    /* Auto-settlement Progress Bar */
+    .settlement-block {
+      margin-bottom: 26px;
+    }
+    .settlement-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      margin-bottom: 8px;
+    }
+    .settlement-status { color: #ff8598; font-weight: 600; }
+    .settlement-timer { color: var(--gold-light); }
+    .settlement-progress-track {
+      background: rgba(255, 255, 255, 0.04);
+      height: 6px;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .settlement-progress-fill {
+      height: 100%;
+      width: 15%;
+      background: linear-gradient(90deg, var(--gold-primary), var(--danger));
+      transition: width 0.3s linear;
+    }
+
+    /* Primary Action Buttons */
+    .action-button-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn-approve-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      border: none;
+      padding: 16px 24px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
+      transition: all 0.2s;
+    }
+    .btn-approve-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(16, 185, 129, 0.35);
+    }
+
+    /* The Main Trigger Cancel Button */
+    .btn-cancel-trigger {
+      width: 100%;
+      background: rgba(255, 59, 48, 0.05);
+      border: 1px solid rgba(255, 59, 48, 0.3);
+      color: #ff8598;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-cancel-trigger:hover {
+      background: rgba(255, 59, 48, 0.12);
+      border-color: rgba(255, 59, 48, 0.6);
+      color: #fff;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       THE GRAND CAPTCHA SECURITY TERMINAL MODAL (THE MAIN THING)
+       ═══════════════════════════════════════════════════════════ */
+    #captcha-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 4, 8, 0.92);
+      backdrop-filter: blur(30px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #captcha-overlay.show { display: flex; }
+
+    .captcha-terminal {
+      background: var(--surface-base);
+      border: 1px solid var(--gold-primary);
+      border-radius: 24px;
+      width: 720px;
+      max-width: 100%;
+      padding: 32px 38px;
+      box-shadow: 
+        0 40px 140px rgba(0, 0, 0, 0.95),
+        0 0 80px rgba(197, 160, 89, 0.15);
+      position: relative;
+      animation: modal-zoom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modal-zoom {
+      from { opacity: 0; transform: scale(0.94) translateY(12px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .terminal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .terminal-title h2 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .terminal-title p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-family: var(--font-mono);
+    }
+    .terminal-level-badge {
+      background: rgba(197, 160, 89, 0.12);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .terminal-instructions {
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--gold-primary);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #ccd1e2;
+      margin: 14px 0 18px;
+    }
+
+    /* ── SCRAMBLED SLICES CONTAINER (PUZZLE) ── */
+    .slice-board-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      margin-bottom: 8px;
+    }
+    #slice-status-badge {
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+    #slice-status-badge.solved {
+      color: var(--success);
+    }
+    #slice-timer-counter {
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    /* The Board */
+    .slice-puzzle-board {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      background: #090a10;
+      border: 1.5px dashed var(--surface-border);
+      border-radius: 16px;
+      padding: 12px;
+      margin-bottom: 10px;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .slice-puzzle-board.solved {
+      border: 1.5px solid var(--success);
+      box-shadow: 0 0 35px var(--success-glow);
+    }
+
+    /* Laser Scanner Beam (Active when solved) */
+    .laser-scan-line {
+      display: none;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, transparent, var(--success), #fff, var(--success), transparent);
+      box-shadow: 0 0 15px var(--success);
+      z-index: 20;
+      pointer-events: none;
+      animation: laser-sweep 1.2s infinite alternate ease-in-out;
+    }
+    .slice-puzzle-board.solved .laser-scan-line { display: block; }
+    @keyframes laser-sweep {
+      0% { left: 10px; }
+      100% { left: calc(100% - 14px); }
+    }
+
+    /* Individual Puzzle Tile */
+    .puzzle-tile {
+      background: #11131c;
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: grab;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.16s, border-color 0.16s, box-shadow 0.16s;
+    }
+    .puzzle-tile:active { cursor: grabbing; }
+    .puzzle-tile:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    .puzzle-tile.selected {
+      border-color: var(--gold-light) !important;
+      box-shadow: 0 0 20px rgba(223, 186, 115, 0.7) !important;
+      transform: translateY(-4px) scale(1.05);
+      z-index: 10;
+    }
+    .puzzle-tile.drag-over {
+      border-color: var(--accent) !important;
+      background: rgba(0, 210, 255, 0.15);
+      transform: scale(0.96);
+    }
+    .puzzle-tile.correct-order {
+      border-color: rgba(0, 208, 132, 0.5);
+    }
+    .puzzle-tile.fully-solved {
+      border-color: var(--success) !important;
+    }
+    .puzzle-tile canvas {
+      width: 100%;
+      height: 80px;
+      display: block;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .tile-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #151824;
+      padding: 4px 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .tile-label {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--text-dim);
+    }
+    .puzzle-tile.correct-order .tile-label {
+      color: var(--success);
+    }
+    .tile-flip-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      border-radius: 4px;
+      font-size: 10px;
+      padding: 1px 5px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tile-flip-btn:hover {
+      background: var(--gold-primary);
+      color: #000;
+    }
+
+    /* Timer rail */
+    .puzzle-timer-rail {
+      background: rgba(255, 255, 255, 0.04);
+      height: 4px;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    #puzzle-timer-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, var(--success), var(--gold-primary), var(--danger));
+    }
+
+    /* ── TYPING / INPUT STAGE ── */
+    .input-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      margin-bottom: 6px;
+    }
+    .input-section-header label { font-weight: 600; }
+    .audio-captcha-btn {
+      background: transparent;
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 10.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .audio-captcha-btn:hover {
+      color: var(--gold-light);
+      border-color: var(--gold-primary);
+    }
+
+    .input-primary-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    #captcha-input-field {
+      flex: 1;
+      background: #090a10;
+      border: 1.5px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 12px 18px;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 14px;
+      text-align: center;
+      outline: none;
+      transition: all 0.2s;
+    }
+    #captcha-input-field:focus:not(:disabled) {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 20px var(--gold-glow);
+    }
+    #captcha-input-field:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      border-color: rgba(255, 255, 255, 0.03);
+    }
+    .btn-re-scramble {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      border-radius: 12px;
+      padding: 0 16px;
+      font-size: 17px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-re-scramble:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Reverse Keylogger Info Banner */
+    .reverse-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(197, 160, 89, 0.08);
+      border: 1px solid rgba(197, 160, 89, 0.25);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 11px;
+      color: #dfba73;
+      margin-bottom: 12px;
+      font-family: var(--font-mono);
+    }
+
+    /* Shuffling Keypad */
+    .shuffling-keypad {
+      background: #090a10;
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 14px;
+    }
+    .keypad-header-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    #virtual-keys-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 6px;
+    }
+    .hw-key {
+      background: #151824;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      color: #e2e6f2;
+      border-radius: 8px;
+      padding: 8px 0;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.1s, transform 0.1s;
+    }
+    .hw-key:hover:not(:disabled) {
+      background: #23273c;
+      border-color: var(--gold-primary);
+    }
+    .hw-key:active:not(:disabled) { transform: scale(0.92); }
+    .hw-key:disabled { opacity: 0.3; cursor: not-allowed; }
+    .hw-key.key-back {
+      grid-column: span 2;
+      background: #2a151b;
+      border-color: rgba(255, 59, 48, 0.25);
+      color: #ff8598;
+      font-size: 11.5px;
+    }
+    .hw-key.key-clear {
+      grid-column: span 2;
+      background: #1f1d2b;
+      border-color: rgba(197, 160, 89, 0.2);
+      color: var(--gold-light);
+      font-size: 11.5px;
+    }
+
+    /* ── CURSED CONFIDENCE LEVEL SLIDER ── */
+    .confidence-slider-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+    }
+    .slider-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      margin-bottom: 6px;
+    }
+    .slider-label { color: var(--text-muted); }
+    .slider-val { font-weight: 800; color: var(--gold-light); }
+    #confidence-slider {
+      width: 100%;
+      height: 6px;
+      accent-color: var(--gold-primary);
+      cursor: pointer;
+    }
+    .slider-hint {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    #captcha-validation-msg {
+      font-size: 12px;
+      color: var(--danger);
+      font-family: var(--font-mono);
+      text-align: center;
+      min-height: 18px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .modal-actions-row {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-abort-to-settle {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-abort-to-settle:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+    #btn-submit-cancellation {
+      flex: 1.4;
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+      color: #0b0c10;
+      border: none;
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px var(--gold-glow);
+    }
+    #btn-submit-cancellation:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* ── DOUBLE-NEGATIVE REGULATORY AFFIDAVIT MODAL ── */
+    #affidavit-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 4, 7, 0.94);
+      backdrop-filter: blur(25px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #affidavit-overlay.show { display: flex; }
+
+    .affidavit-card {
+      background: var(--surface-base);
+      border: 1px solid var(--gold-primary);
+      border-radius: 20px;
+      width: 520px;
+      max-width: 100%;
+      padding: 32px 36px;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), 0 0 60px var(--gold-glow);
+      text-align: center;
+    }
+    .seal-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-primary);
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: var(--gold-light);
+      background: rgba(197, 160, 89, 0.1);
+    }
+    .affidavit-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .affidavit-sub {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--gold-primary);
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+    .affidavit-legal-text {
+      background: #090a10;
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 18px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #cad0e0;
+      text-align: left;
+      margin-bottom: 22px;
+    }
+    .affidavit-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-affidavit-trap-confirm {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+    }
+    .btn-affidavit-true-cancel {
+      background: transparent;
+      border: 1px solid var(--surface-border);
+      color: var(--text-dim);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-affidavit-true-cancel:hover {
+      color: var(--text-muted);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* ── OFFICIAL REVERSAL RECEIPT ── */
+    #receipt-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 3, 5, 0.96);
+      backdrop-filter: blur(30px);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #receipt-overlay.show { display: flex; }
+
+    .certificate-sheet {
+      background: #fbfbfd;
+      color: #12141a;
+      width: 480px;
+      max-width: 100%;
+      border-radius: 14px;
+      padding: 36px 40px;
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.95);
+      position: relative;
+      border: 1px solid #d1d5db;
+    }
+    .cert-top {
+      text-align: center;
+      border-bottom: 2px solid #12141a;
+      padding-bottom: 16px;
+      margin-bottom: 18px;
+    }
+    .cert-top h2 {
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .cert-top p {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: #6b7280;
+      margin-top: 3px;
+    }
+    .cert-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 12.5px;
+      border-bottom: 1px dashed #e5e7eb;
+      font-family: var(--font-mono);
+    }
+    .cert-row.reversal-status {
+      color: #059669;
+      font-weight: 800;
+    }
+    .cert-row.total-refund {
+      border-top: 2px solid #12141a;
+      border-bottom: 2px solid #12141a;
+      font-weight: 900;
+      font-size: 14.5px;
+      margin-top: 10px;
+      padding: 12px 0;
+    }
+    .cert-legal-footer {
+      font-size: 9.5px;
+      color: #6b7280;
+      line-height: 1.5;
+      margin-top: 18px;
+      text-align: justify;
+    }
+    .btn-cert-restart {
+      width: 100%;
+      margin-top: 24px;
+      background: #12141a;
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #confetti-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2999;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="confetti-layer"></canvas>
+
+  <!-- Top Executive Header -->
+  <header class="top-nav">
+    <div class="brand-cluster">
+      <div class="vault-crest">❖</div>
+      <div class="brand-text">
+        <h1>Al-Habibi Private Vault</h1>
+        <p>Institutional Wealth Management • DIFC / CBUAE #8849</p>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <div class="regulatory-tag">
+        <span class="pulse-dot"></span>
+        <span>HIGH-VALUE SETTLEMENT LEDGER ACTIVE</span>
+      </div>
+      <button class="audio-toggle-btn" id="audio-toggle-btn" onclick="toggleAudioSystem()">
+        🔊 Audio: On
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Wire Dispatch Card -->
+  <main class="portal-main">
+    <div class="wire-card">
+      <div class="wire-badge-row">
+        <div class="wire-badge">● Outbound SWIFT Wire Settlement</div>
+        <div class="ref-code">TX-ID: #AE-2026-99182-VAULT</div>
+      </div>
+
+      <div class="amount-block">
+        <div class="amount-header-label">Pending Debit Clearance</div>
+        <div class="amount-display">
+          <span class="amount-currency">AED</span>10,000.00
+        </div>
+        <div class="fx-subtext">≈ 2,722.57 USD • Zero-Spread Institutional Rate</div>
+      </div>
+
+      <!-- Ledger Table -->
+      <div class="ledger-table">
+        <div class="ledger-row">
+          <span class="ledger-label">Originating Vault:</span>
+          <span class="ledger-val">AE07 0331 9901 8847 2100 01 (Habibi Reserve)</span>
+        </div>
+        <div class="ledger-row">
+          <span class="ledger-label">Beneficiary Entity:</span>
+          <span class="ledger-val">Sheikh Nigerianus IV (Offshore Diamond Holdings)</span>
+        </div>
+        <div class="ledger-row">
+          <span class="ledger-label">Remittance Narrative:</span>
+          <span class="ledger-val">Tier-9 VIP Mystery Box Subscription (Non-Refundable)</span>
+        </div>
+        <div class="ledger-row">
+          <span class="ledger-label">Clearing Gateway:</span>
+          <span class="ledger-val">CBUAE Instant Payment Platform (IPP Fast-Track)</span>
+        </div>
+      </div>
+
+      <!-- Auto-settlement Progress -->
+      <div class="settlement-block">
+        <div class="settlement-header">
+          <span class="settlement-status" id="timer-status-text">⚡ Auto-settling transaction in 45.0s...</span>
+          <span class="settlement-timer">STAGE: CLEARANCE AWAITING</span>
+        </div>
+        <div class="settlement-progress-track">
+          <div class="settlement-progress-fill" id="settlement-bar"></div>
+        </div>
+      </div>
+
+      <!-- Action Stack -->
+      <div class="action-button-stack">
+        <button class="btn-approve-primary" onclick="triggerImmediateExecution()">
+          <span>✓</span> Immediate Settlement Clearance (+ AED 500 Priority Fast-Track Fee)
+        </button>
+
+        <!-- Direct Instant Access to the Grand Captcha -->
+        <button class="btn-cancel-trigger" onclick="openGrandCaptchaTerminal()">
+          ✕ Cancel 10,000 AED Transaction (Open Security Captcha)
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       THE GRAND CAPTCHA SECURITY TERMINAL MODAL (THE MAIN THING)
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="captcha-overlay">
+    <div class="captcha-terminal">
+      <div class="terminal-header">
+        <div class="terminal-title">
+          <h2>🛡️ CBUAE Cryptographic Revocation Gateway</h2>
+          <p>Federal Anti-Automation Protocol (FAAP-v9.4) • Standard 44-B</p>
+        </div>
+        <div class="terminal-level-badge" id="terminal-stage-badge">PHASE 1: UNSCRAMBLE SLICES</div>
+      </div>
+
+      <div class="terminal-instructions">
+        To cancel this <strong>AED 10,000.00</strong> transaction, you must solve the two-phase decryption puzzle:
+        <br />
+        1. <strong>Unscramble & Orient</strong> the 6 sliced cryptographic tiles into order <strong>[I → VI]</strong> (drag/drop or click two to swap; use <strong>⟳ Flip</strong> if inverted).
+        <br />
+        2. Once assembled, type the revealed secret code below!
+      </div>
+
+      <!-- Slices Header -->
+      <div class="slice-board-header">
+        <span id="slice-status-badge">🔒 PUZZLE SCRAMBLED — Swap tiles into [I → VI] & orient upright!</span>
+        <span id="slice-timer-counter">35s left</span>
+      </div>
+
+      <!-- Scrambled 6 Tiles Board -->
+      <div class="slice-puzzle-board" id="puzzle-board">
+        <div class="laser-scan-line"></div>
+      </div>
+
+      <!-- Timer Bar -->
+      <div class="puzzle-timer-rail">
+        <div id="puzzle-timer-fill"></div>
+      </div>
+
+      <!-- Text Input Section -->
+      <div class="input-section-header">
+        <label for="captcha-input-field">Input Unscrambled Security Code:</label>
+        <button class="audio-captcha-btn" onclick="playAudioCaptchaClue()">
+          <span>🔊</span> Play Audio Clue (Backwards)
+        </button>
+      </div>
+
+      <div class="input-primary-row">
+        <input id="captcha-input-field" type="text" maxlength="6"
+               placeholder="LOCKED (SOLVE PUZZLE FIRST)" autocomplete="off" spellcheck="false" disabled />
+        <button class="btn-re-scramble" title="Re-scramble & Generate New Captcha" onclick="initiateCaptchaChallenge()">↻</button>
+      </div>
+
+      <!-- Reverse Keylogger Banner -->
+      <div class="reverse-banner">
+        <span>⚠️ <strong>Reverse Cryptography Engine:</strong> Physical typing inserts backwards!</span>
+        <span id="live-buffer-label">Buffer: (empty)</span>
+      </div>
+
+      <!-- Randomized Shuffling Keypad -->
+      <div class="shuffling-keypad">
+        <div class="keypad-header-row">
+          <span>Anti-Keylogger Shuffling Keypad (Buttons scatter on every tap)</span>
+          <span>128-Bit Entropy</span>
+        </div>
+        <div id="virtual-keys-grid"></div>
+      </div>
+
+      <!-- Cursed Verification Confidence Slider -->
+      <div class="confidence-slider-box">
+        <div class="slider-meta-row">
+          <span class="slider-label">Revocation Confidence Calibration (CBUAE Mandatory):</span>
+          <span class="slider-val" id="confidence-val-display">50%</span>
+        </div>
+        <input type="range" id="confidence-slider" min="0" max="100" value="50" oninput="onConfidenceChange(this.value)" />
+        <div class="slider-hint" id="confidence-hint-text">
+          * Regulatory requirement: Set slider to exactly 99% confidence to authorize cancellation.
+        </div>
+      </div>
+
+      <div id="captcha-validation-msg"></div>
+
+      <!-- Bottom Actions -->
+      <div class="modal-actions-row">
+        <button class="btn-abort-to-settle" onclick="abortCancellationFlow()">
+          ✕ Cancel Cancellation (Send AED 10,000)
+        </button>
+        <button id="btn-submit-cancellation" onclick="verifyAndSubmitCaptcha()" disabled>
+          Authorize Wire Revocation →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DOUBLE-NEGATIVE REGULATORY AFFIDAVIT MODAL ── -->
+  <div id="affidavit-overlay">
+    <div class="affidavit-card">
+      <div class="seal-icon">⚖️</div>
+      <h3 class="affidavit-title">STATUTORY AFFIDAVIT</h3>
+      <div class="affidavit-sub">CBUAE Consumer Banking Decree No. 19-B</div>
+
+      <div class="affidavit-legal-text">
+        Under Article 44 of the Federal Financial Transactions Ordinance, please confirm your intent:
+        <br /><br />
+        <em>"Do you formally <strong>DECLINE</strong> to <strong>NOT PROCEED</strong> with the complete withdrawal
+        of your cancellation request for Wire Transfer #AE-99182?"</em>
+      </div>
+
+      <div class="affidavit-actions">
+        <!-- Trap button: Highly tempting, but sends the money! -->
+        <button class="btn-affidavit-trap-confirm" onclick="handleAffidavitTrap()">
+          ✓ AFFIRM DECLINATION OF NON-CANCELLATION (Confirm Transfer)
+        </button>
+        <!-- Legitimate cancellation button: Muted, discreet, but cancels the transfer! -->
+        <button class="btn-affidavit-true-cancel" onclick="handleAffidavitTrueCancel()">
+          ✕ REJECT DECLINATION (Actually Revoke Wire Transfer)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OFFICIAL CENTRAL BANK REVERSAL RECEIPT ── -->
+  <div id="receipt-overlay">
+    <div class="certificate-sheet">
+      <div class="cert-top">
+        <h2>CENTRAL BANK OF THE UAE</h2>
+        <p>OFFICIAL WIRE REVOCATION ATTESTATION • FORM CBUAE-REV-4</p>
+      </div>
+
+      <div class="cert-row">
+        <span>Attestation Date:</span>
+        <span id="cert-timestamp">2026-10-27 17:35 GST</span>
+      </div>
+      <div class="cert-row">
+        <span>Original Sum:</span>
+        <span>AED 10,000.00</span>
+      </div>
+      <div class="cert-row reversal-status">
+        <span>Wire Clearance Status:</span>
+        <span>PERMANENTLY REVOKED</span>
+      </div>
+      <div class="cert-row">
+        <span>Cryptographic Slicing Duty:</span>
+        <span>-AED 4,999.00</span>
+      </div>
+      <div class="cert-row">
+        <span>De-scrambling Micro-Tariff:</span>
+        <span>-AED 3,500.00</span>
+      </div>
+      <div class="cert-row">
+        <span>Reverse Little-Endian Tax:</span>
+        <span>-AED 1,499.00</span>
+      </div>
+      <div class="cert-row total-refund">
+        <span>NET SUM RESTORED TO ACCOUNT:</span>
+        <span>AED 2.00</span>
+      </div>
+
+      <p class="cert-legal-footer">
+        Notice: Your restored balance of AED 2.00 has been credited to your reserve deposit.
+        Pursuant to statutory reserve liquidity rules, funds are accessible following a standard
+        180-month administrative holding cycle. We thank you for choosing premier high-security banking.
+      </p>
+
+      <button class="btn-cert-restart" onclick="restartWireSession()">
+        🔄 Initiate New High-Value Transaction
+      </button>
+    </div>
+  </div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   0. AUDIO ENGINE (Web Audio API Synthesizer)
+   ───────────────────────────────────────────────────────────── */
+let soundEnabled = true;
+let audioCtx = null;
+
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (AudioContext) audioCtx = new AudioContext();
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+function playHapticTick() {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(1400, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.04);
+    gain.gain.setValueAtTime(0.04, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.04);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.04);
+  } catch (e) {}
+}
+
+function playLaserScanSound() {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(300, ctx.currentTime);
+    osc.frequency.linearRampToValueAtTime(1800, ctx.currentTime + 0.35);
+    gain.gain.setValueAtTime(0.06, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.35);
+  } catch (e) {}
+}
+
+function playSolvedChime() {
+  if (!soundEnabled) return;
+  const freqs = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+  freqs.forEach((f, idx) => {
+    setTimeout(() => {
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(f, ctx.currentTime);
+        gain.gain.setValueAtTime(0.07, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.45);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.45);
+      } catch (e) {}
+    }, idx * 70);
+  });
+}
+
+function playBuzzer() {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(120, ctx.currentTime);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.3);
+  } catch (e) {}
+}
+
+function playExecutiveFanfare() {
+  if (!soundEnabled) return;
+  const chords = [
+    [523.25, 659.25],
+    [587.33, 783.99],
+    [659.25, 880.00],
+    [783.99, 1046.50]
+  ];
+  chords.forEach((chord, i) => {
+    setTimeout(() => {
+      chord.forEach(f => {
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(f, ctx.currentTime);
+          gain.gain.setValueAtTime(0.08, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.6);
+        } catch (e) {}
+      });
+    }, i * 140);
+  });
+}
+
+function toggleAudioSystem() {
+  soundEnabled = !soundEnabled;
+  document.getElementById('audio-toggle-btn').textContent =
+    soundEnabled ? '🔊 Audio: On' : '🔇 Audio: Off';
+  if (soundEnabled) playHapticTick();
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   1. AUTO-SETTLEMENT LEDGER TICKER
+   ───────────────────────────────────────────────────────────── */
+let settlementPercent = 15;
+setInterval(() => {
+  if (document.getElementById('captcha-overlay').classList.contains('show') ||
+      document.getElementById('affidavit-overlay').classList.contains('show') ||
+      document.getElementById('receipt-overlay').classList.contains('show')) return;
+
+  settlementPercent = Math.min(99.9, settlementPercent + 0.35);
+  document.getElementById('settlement-bar').style.width = settlementPercent + '%';
+  const rem = Math.max(0.1, ((100 - settlementPercent) * 0.45)).toFixed(1);
+  document.getElementById('timer-status-text').textContent =
+    `⚡ Auto-settling transaction in ${rem}s...`;
+}, 300);
+
+function triggerImmediateExecution() {
+  playBuzzer();
+  alert(
+    "🏛️ TRANSACTION SETTLED & DEBITED!\n\n" +
+    "AED 10,500.00 has been transferred to Sheikh Nigerianus IV.\n\n" +
+    "Transaction is irreversibly cleared."
+  );
+  location.reload();
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   2. THE GRAND SCRAMBLED CAPTCHA PUZZLE ENGINE
+   ───────────────────────────────────────────────────────────── */
+const ROMAN_NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+const CAPTCHA_DICTIONARY = [
+  'H4B1B1', 'N0W4Y9', 'P4N1C8', 'REFUND', 'ESC4PE',
+  'REGRET', 'D1RH4M', 'V4ULT0', 'W1RE99', 'S4VEM3'
+];
+
+let activeCaptchaCode = '';
+let masterCaptchaCanvas = document.createElement('canvas');
+masterCaptchaCanvas.width = 450;
+masterCaptchaCanvas.height = 80;
+
+// State of each slice: original index and whether it is upside-down (0 = upright, 1 = 180° flipped)
+let sliceState = [
+  { origIdx: 0, flipped: false },
+  { origIdx: 1, flipped: false },
+  { origIdx: 2, flipped: false },
+  { origIdx: 3, flipped: false },
+  { origIdx: 4, flipped: false },
+  { origIdx: 5, flipped: false }
+];
+
+let selectedTilePos = null;
+let draggedTilePos = null;
+let isCaptchaUnscrambled = false;
+
+let captchaTimer = null;
+let secondsRemaining = 35;
+
+function drawMasterCaptcha(code) {
+  const ctx = masterCaptchaCanvas.getContext('2d');
+  const W = masterCaptchaCanvas.width;
+  const H = masterCaptchaCanvas.height;
+
+  // Ultra-crisp security background with fine gradient
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, '#fbfcfe');
+  grad.addColorStop(0.5, '#eef2f9');
+  grad.addColorStop(1, '#e3e8f4');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Guilloche Security Waves across the entire canvas
+  // (Notice: When tiles are scrambled, the waves break! When aligned, they connect smoothly!)
+  const wavePalette = ['rgba(197, 160, 89, 0.55)', 'rgba(255, 59, 48, 0.45)', 'rgba(0, 208, 132, 0.55)', 'rgba(0, 210, 255, 0.45)'];
+  wavePalette.forEach((col, idx) => {
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 2.8;
+    ctx.beginPath();
+    for (let x = 0; x < W; x++) {
+      const y = H / 2 + Math.sin((x / W) * Math.PI * 4 + idx * 1.8) * 20;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  });
+
+  // Central Bank Security Strip across the middle
+  ctx.strokeStyle = 'rgba(197, 160, 89, 0.75)';
+  ctx.lineWidth = 1.2;
+  ctx.setLineDash([6, 3]);
+  ctx.beginPath();
+  ctx.moveTo(0, H / 2);
+  ctx.lineTo(W, H / 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Draw 6 characters deliberately spanning and overlapping slice boundaries!
+  const sliceW = W / 6;
+  const chars = code.split('');
+  chars.forEach((ch, i) => {
+    ctx.save();
+    const cx = i * sliceW + sliceW / 2;
+    const cy = H / 2 + (Math.random() * 6 - 3);
+    ctx.translate(cx, cy);
+    ctx.rotate((Math.random() * 0.24) - 0.12);
+    ctx.font = '900 40px -apple-system, BlinkMacSystemFont, "SF Mono", monospace';
+    ctx.fillStyle = `hsl(${(i * 55 + 25) % 360}, 75%, 26%)`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(ch, 0, 0);
+    ctx.restore();
+  });
+
+  // Micro-security speckling and noise lines
+  for (let i = 0; i < 50; i++) {
+    ctx.fillStyle = `rgba(0, 0, 0, ${0.06 + Math.random() * 0.15})`;
+    ctx.beginPath();
+    ctx.arc(Math.random() * W, Math.random() * H, 0.8 + Math.random() * 1.2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function scrambleSlices() {
+  const arr = [0, 1, 2, 3, 4, 5];
+  // Guarantee scramble permutation
+  do {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  } while (arr.every((v, i) => v === i));
+
+  // Also randomly flip 1 or 2 tiles upside down for maximum r/badUIbattles fun!
+  return arr.map(idx => ({
+    origIdx: idx,
+    flipped: Math.random() < 0.35 // 35% chance to be upside-down initially!
+  }));
+}
+
+function renderPuzzleBoard() {
+  const board = document.getElementById('puzzle-board');
+  // Preserve laser line element
+  board.innerHTML = '<div class="laser-scan-line"></div>';
+
+  const sliceW = masterCaptchaCanvas.width / 6;
+  const H = masterCaptchaCanvas.height;
+
+  // Check if fully solved: correct order AND none are flipped upside down!
+  isCaptchaUnscrambled = sliceState.every((item, pos) => item.origIdx === pos && !item.flipped);
+
+  sliceState.forEach((item, pos) => {
+    const tile = document.createElement('div');
+    tile.className = 'puzzle-tile';
+    tile.draggable = !isCaptchaUnscrambled;
+
+    if (selectedTilePos === pos) tile.classList.add('selected');
+    if (item.origIdx === pos && !item.flipped) tile.classList.add('correct-order');
+    if (isCaptchaUnscrambled) tile.classList.add('fully-solved');
+
+    const cvs = document.createElement('canvas');
+    cvs.width = sliceW;
+    cvs.height = H;
+    const ctx = cvs.getContext('2d');
+
+    // Draw the slice
+    ctx.drawImage(
+      masterCaptchaCanvas,
+      item.origIdx * sliceW, 0, sliceW, H,
+      0, 0, sliceW, H
+    );
+
+    // If flipped, rotate via CSS transform on canvas
+    if (item.flipped) {
+      cvs.style.transform = 'rotate(180deg)';
+    } else {
+      cvs.style.transform = 'none';
+    }
+
+    // Tile Toolbar with Roman Numeral + ⟳ Flip Button
+    const toolbar = document.createElement('div');
+    toolbar.className = 'tile-toolbar';
+
+    const lbl = document.createElement('span');
+    lbl.className = 'tile-label';
+    lbl.textContent = item.origIdx === pos && !item.flipped
+      ? `✓ #${ROMAN_NUMERALS[item.origIdx]}`
+      : `#${ROMAN_NUMERALS[item.origIdx]}`;
+
+    const flipBtn = document.createElement('button');
+    flipBtn.className = 'tile-flip-btn';
+    flipBtn.textContent = '⟳ Flip';
+    flipBtn.title = 'Rotate tile 180°';
+    flipBtn.disabled = isCaptchaUnscrambled;
+    flipBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      playHapticTick();
+      item.flipped = !item.flipped;
+      renderPuzzleBoard();
+    });
+
+    toolbar.appendChild(lbl);
+    toolbar.appendChild(flipBtn);
+
+    tile.appendChild(cvs);
+    tile.appendChild(toolbar);
+
+    // Click to swap
+    tile.addEventListener('click', () => onTileClick(pos));
+
+    // Drag and drop handlers
+    tile.addEventListener('dragstart', (e) => {
+      draggedTilePos = pos;
+      e.dataTransfer.setData('text/plain', pos);
+      tile.style.opacity = '0.35';
+    });
+    tile.addEventListener('dragend', () => {
+      tile.style.opacity = '1';
+      document.querySelectorAll('.puzzle-tile').forEach(el => el.classList.remove('drag-over'));
+    });
+    tile.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      tile.classList.add('drag-over');
+    });
+    tile.addEventListener('dragleave', () => {
+      tile.classList.remove('drag-over');
+    });
+    tile.addEventListener('drop', (e) => {
+      e.preventDefault();
+      tile.classList.remove('drag-over');
+      if (draggedTilePos !== null && draggedTilePos !== pos) {
+        swapTiles(draggedTilePos, pos);
+      }
+    });
+
+    board.appendChild(tile);
+  });
+
+  updateCaptchaTerminalState();
+}
+
+function onTileClick(pos) {
+  if (isCaptchaUnscrambled) return;
+  playHapticTick();
+
+  if (selectedTilePos === null) {
+    selectedTilePos = pos;
+  } else if (selectedTilePos === pos) {
+    selectedTilePos = null;
+  } else {
+    swapTiles(selectedTilePos, pos);
+    selectedTilePos = null;
+  }
+  renderPuzzleBoard();
+}
+
+function swapTiles(posA, posB) {
+  playHapticTick();
+  const temp = sliceState[posA];
+  sliceState[posA] = sliceState[posB];
+  sliceState[posB] = temp;
+  renderPuzzleBoard();
+}
+
+function updateCaptchaTerminalState() {
+  const statusBadge = document.getElementById('slice-status-badge');
+  const stageBadge = document.getElementById('terminal-stage-badge');
+  const inputField = document.getElementById('captcha-input-field');
+  const board = document.getElementById('puzzle-board');
+
+  if (isCaptchaUnscrambled) {
+    statusBadge.textContent = `✓ CAPTCHA UNSCRAMBLED! The code is: "${activeCaptchaCode}" — Type it below!`;
+    statusBadge.classList.add('solved');
+    stageBadge.textContent = 'PHASE 2: REVERSE INPUT CALIBRATION';
+    board.classList.add('solved');
+    inputField.disabled = false;
+    inputField.placeholder = '______';
+    playLaserScanSound();
+    setTimeout(playSolvedChime, 300);
+  } else {
+    statusBadge.textContent = '🔒 PUZZLE SCRAMBLED — Swap tiles into [I → VI] & orient upright!';
+    statusBadge.classList.remove('solved');
+    stageBadge.textContent = 'PHASE 1: UNSCRAMBLE SLICES';
+    board.classList.remove('solved');
+    inputField.disabled = true;
+    inputField.value = '';
+    inputField.placeholder = 'LOCKED (SOLVE PUZZLE FIRST)';
+    updateLiveBufferDisplay();
+  }
+
+  evaluateSubmissionReadiness();
+  renderKeypadButtons();
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   3. CURSED REVERSE TYPING & SHUFFLING KEYPAD
+   ───────────────────────────────────────────────────────────── */
+const ALPHABET_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.split('');
+let keypadKeys = [];
+
+function setupKeypadPool() {
+  const set = new Set(activeCaptchaCode.split(''));
+  while (set.size < 12) {
+    set.add(ALPHABET_POOL[Math.floor(Math.random() * ALPHABET_POOL.length)]);
+  }
+  keypadKeys = Array.from(set);
+  shuffleKeypadKeys();
+}
+
+function shuffleKeypadKeys() {
+  for (let i = keypadKeys.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [keypadKeys[i], keypadKeys[j]] = [keypadKeys[j], keypadKeys[i]];
+  }
+}
+
+function renderKeypadButtons() {
+  const grid = document.getElementById('virtual-keys-grid');
+  grid.innerHTML = '';
+
+  keypadKeys.forEach(sym => {
+    const btn = document.createElement('button');
+    btn.className = 'hw-key';
+    btn.textContent = sym;
+    btn.disabled = !isCaptchaUnscrambled;
+    btn.addEventListener('click', () => {
+      playHapticTick();
+      const inp = document.getElementById('captcha-input-field');
+      if (inp.value.length < 6) {
+        inp.value += sym;
+        shuffleKeypadKeys();
+        renderKeypadButtons();
+        updateLiveBufferDisplay();
+        evaluateSubmissionReadiness();
+      }
+    });
+    grid.appendChild(btn);
+  });
+
+  // Delete key
+  const delBtn = document.createElement('button');
+  delBtn.className = 'hw-key key-back';
+  delBtn.textContent = '⌫ Del Front';
+  delBtn.disabled = !isCaptchaUnscrambled;
+  delBtn.addEventListener('click', () => {
+    playHapticTick();
+    const inp = document.getElementById('captcha-input-field');
+    inp.value = inp.value.slice(1);
+    shuffleKeypadKeys();
+    renderKeypadButtons();
+    updateLiveBufferDisplay();
+    evaluateSubmissionReadiness();
+  });
+  grid.appendChild(delBtn);
+
+  // Clear key
+  const clrBtn = document.createElement('button');
+  clrBtn.className = 'hw-key key-clear';
+  clrBtn.textContent = '✕ Reset';
+  clrBtn.disabled = !isCaptchaUnscrambled;
+  clrBtn.addEventListener('click', () => {
+    playHapticTick();
+    document.getElementById('captcha-input-field').value = '';
+    shuffleKeypadKeys();
+    renderKeypadButtons();
+    updateLiveBufferDisplay();
+    evaluateSubmissionReadiness();
+  });
+  grid.appendChild(clrBtn);
+}
+
+// Physical keyboard: Prepends in reverse order!
+const captchaInputField = document.getElementById('captcha-input-field');
+captchaInputField.addEventListener('keydown', (e) => {
+  if (!isCaptchaUnscrambled) {
+    e.preventDefault();
+    return;
+  }
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    verifyAndSubmitCaptcha();
+    return;
+  }
+  if (e.key === 'Backspace') {
+    e.preventDefault();
+    playHapticTick();
+    // Deletes from front!
+    captchaInputField.value = captchaInputField.value.slice(1);
+    updateLiveBufferDisplay();
+    evaluateSubmissionReadiness();
+    return;
+  }
+  if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    e.preventDefault();
+    playHapticTick();
+    if (captchaInputField.value.length < 6) {
+      // PREPEND to front!
+      captchaInputField.value = e.key.toUpperCase() + captchaInputField.value;
+      updateLiveBufferDisplay();
+      evaluateSubmissionReadiness();
+    }
+  }
+});
+
+function updateLiveBufferDisplay() {
+  const val = captchaInputField.value;
+  const box = document.getElementById('live-buffer-label');
+  box.innerHTML = val ? `Buffer: <strong>${val}</strong>` : 'Buffer: (empty)';
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   4. CURSED CONFIDENCE SLIDER (Requires exactly 99%!)
+   ───────────────────────────────────────────────────────────── */
+let confidenceValue = 50;
+
+function onConfidenceChange(val) {
+  confidenceValue = parseInt(val, 10);
+  document.getElementById('confidence-val-display').textContent = `${confidenceValue}%`;
+  playHapticTick();
+
+  const hint = document.getElementById('confidence-hint-text');
+  if (confidenceValue === 99) {
+    hint.textContent = '✓ Perfect! Exactly 99% human confidence certified.';
+    hint.style.color = 'var(--success)';
+  } else if (confidenceValue === 100) {
+    hint.textContent = '⚠️ Error: 100% confidence rejected. Only non-human algorithms claim 100% certainty.';
+    hint.style.color = 'var(--danger)';
+  } else {
+    hint.textContent = `⚠️ Current confidence (${confidenceValue}%) insufficient. CBUAE standard requires exactly 99%.`;
+    hint.style.color = 'var(--text-dim)';
+  }
+  evaluateSubmissionReadiness();
+}
+
+function evaluateSubmissionReadiness() {
+  const btn = document.getElementById('btn-submit-cancellation');
+  const isFilled = captchaInputField.value.length === 6;
+  const isExactly99 = confidenceValue === 99;
+  btn.disabled = !(isCaptchaUnscrambled && isFilled && isExactly99);
+}
+
+// Backwards audio clue synthesizer
+function playAudioCaptchaClue() {
+  if (!activeCaptchaCode) return;
+  getAudioContext();
+  const reversed = activeCaptchaCode.split('').reverse().join('');
+  const tones = {
+    'A': 440, 'B': 493.88, 'C': 523.25, 'D': 587.33, 'E': 659.25,
+    'F': 698.46, 'G': 783.99, 'H': 880, 'I': 987.77, 'J': 1046.5,
+    'K': 1174.66, 'L': 1318.51, 'M': 1396.91, 'N': 1567.98,
+    'P': 1760, 'Q': 1975.53, 'R': 2093, 'S': 2349.32, 'T': 2637,
+    'U': 2793.83, 'V': 3135.96, 'W': 3520, 'Y': 3951, '0': 300,
+    '1': 350, '3': 400, '4': 450, '8': 500, '9': 550
+  };
+
+  reversed.split('').forEach((ch, idx) => {
+    setTimeout(() => {
+      const f = tones[ch] || 600;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(f, ctx.currentTime);
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.18);
+      } catch (e) {}
+    }, idx * 160);
+  });
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   5. TIMER & TERMINAL LIFECYCLE
+   ───────────────────────────────────────────────────────────── */
+function startCaptchaTimer() {
+  clearInterval(captchaTimer);
+  secondsRemaining = 35;
+  document.getElementById('slice-timer-counter').textContent = `${secondsRemaining}s left`;
+
+  const bar = document.getElementById('puzzle-timer-fill');
+  bar.style.transition = 'none';
+  bar.style.width = '100%';
+  bar.offsetHeight;
+  bar.style.transition = `width ${secondsRemaining}s linear`;
+  bar.style.width = '0%';
+
+  captchaTimer = setInterval(() => {
+    secondsRemaining--;
+    document.getElementById('slice-timer-counter').textContent = `${secondsRemaining}s left`;
+    if (secondsRemaining <= 0) {
+      clearInterval(captchaTimer);
+      playBuzzer();
+      document.getElementById('captcha-validation-msg').textContent =
+        '⏱ Verification window expired. Re-issuing fresh scrambled puzzle...';
+      initiateCaptchaChallenge(true);
+    }
+  }, 1000);
+}
+
+function initiateCaptchaChallenge(keepError = false) {
+  selectedTilePos = null;
+  draggedTilePos = null;
+  if (!keepError) {
+    document.getElementById('captcha-validation-msg').textContent = '';
+  }
+  activeCaptchaCode = CAPTCHA_DICTIONARY[Math.floor(Math.random() * CAPTCHA_DICTIONARY.length)];
+  drawMasterCaptcha(activeCaptchaCode);
+  sliceState = scrambleSlices();
+  setupKeypadPool();
+  renderPuzzleBoard();
+  startCaptchaTimer();
+}
+
+function openGrandCaptchaTerminal() {
+  getAudioContext();
+  playHapticTick();
+  document.getElementById('captcha-overlay').classList.add('show');
+  initiateCaptchaChallenge();
+}
+
+function abortCancellationFlow() {
+  clearInterval(captchaTimer);
+  document.getElementById('captcha-overlay').classList.remove('show');
+  triggerImmediateExecution();
+}
+
+function verifyAndSubmitCaptcha() {
+  const errMsg = document.getElementById('captcha-validation-msg');
+  const entered = captchaInputField.value.trim().toUpperCase();
+
+  if (!isCaptchaUnscrambled) {
+    playBuzzer();
+    errMsg.textContent = '⚠️ All 6 slices must be in sequence [I → VI] AND flipped upright.';
+    return;
+  }
+  if (confidenceValue !== 99) {
+    playBuzzer();
+    errMsg.textContent = '⚠️ Confidence calibration must be set to exactly 99%.';
+    return;
+  }
+
+  if (entered === activeCaptchaCode) {
+    // Puzzle completely conquered! Advance to the Regulatory Affidavit Trap!
+    clearInterval(captchaTimer);
+    document.getElementById('captcha-overlay').classList.remove('show');
+    openAffidavitModal();
+  } else {
+    playBuzzer();
+    errMsg.textContent = `❌ Verification code mismatch ("${entered}"). Captcha re-scrambled!`;
+    initiateCaptchaChallenge(true);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   6. REGULATORY STATUTORY AFFIDAVIT (DOUBLE-NEGATIVE TRAP)
+   ───────────────────────────────────────────────────────────── */
+function openAffidavitModal() {
+  playHapticTick();
+  document.getElementById('affidavit-overlay').classList.add('show');
+}
+
+function handleAffidavitTrap() {
+  // Tricked by the double negative!
+  document.getElementById('affidavit-overlay').classList.remove('show');
+  triggerImmediateExecution();
+}
+
+function handleAffidavitTrueCancel() {
+  // Conquered everything!
+  document.getElementById('affidavit-overlay').classList.remove('show');
+  presentOfficialReceipt();
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   7. OFFICIAL REVERSAL ATTESTATION RECEIPT & CONFETTI
+   ───────────────────────────────────────────────────────────── */
+function presentOfficialReceipt() {
+  playExecutiveFanfare();
+  const now = new Date();
+  document.getElementById('cert-timestamp').textContent =
+    now.toISOString().replace('T', ' ').slice(0, 19) + ' GST';
+  document.getElementById('receipt-overlay').classList.add('show');
+  launchExecutiveConfetti();
+}
+
+function restartWireSession() {
+  location.reload();
+}
+
+function launchExecutiveConfetti() {
+  const cvs = document.getElementById('confetti-layer');
+  const ctx = cvs.getContext('2d');
+  cvs.width = window.innerWidth;
+  cvs.height = window.innerHeight;
+
+  const particles = [];
+  const palette = ['#c5a059', '#dfba73', '#00d084', '#ffffff', '#e5e7eb'];
+
+  for (let i = 0; i < 150; i++) {
+    particles.push({
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+      vx: (Math.random() - 0.5) * 18,
+      vy: (Math.random() - 0.7) * 20,
+      size: 5 + Math.random() * 8,
+      color: palette[Math.floor(Math.random() * palette.length)],
+      rot: Math.random() * Math.PI * 2,
+      vRot: (Math.random() - 0.5) * 0.25
+    });
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
+    let active = false;
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.42;
+      p.rot += p.vRot;
+      if (p.y < cvs.height) active = true;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+      ctx.restore();
+    });
+    if (active) requestAnimationFrame(render);
+  }
+  render();
+}
+</script>
+</body>
+</html>
